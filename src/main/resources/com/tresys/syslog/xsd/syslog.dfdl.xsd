@@ -149,6 +149,7 @@ The message root is 'Syslog'.
                     <xs:restriction base="xs:string">
                       <xs:minLength value="1" />
                       <xs:maxLength value="255" />
+                      <xs:pattern value="[!-~]+" />
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
@@ -157,6 +158,7 @@ The message root is 'Syslog'.
                     <xs:restriction base="xs:string">
                       <xs:minLength value="1" />
                       <xs:maxLength value="48" />
+                      <xs:pattern value="[!-~]+" />
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
@@ -165,6 +167,7 @@ The message root is 'Syslog'.
                     <xs:restriction base="xs:string">
                       <xs:minLength value="1" />
                       <xs:maxLength value="128" />
+                      <xs:pattern value="[!-~]+" />
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
@@ -173,6 +176,7 @@ The message root is 'Syslog'.
                     <xs:restriction base="xs:string">
                       <xs:minLength value="1" />
                       <xs:maxLength value="32" />
+                      <xs:pattern value="[!-~]+" />
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
@@ -193,6 +197,7 @@ The message root is 'Syslog'.
                           <xs:restriction base="xs:string">
                             <xs:minLength value="1" />
                             <xs:maxLength value="32" />
+                            <xs:pattern value="[!-~-[= \]&quot;]]+" />
                           </xs:restriction>
                         </xs:simpleType>
                       </xs:element>
@@ -204,6 +209,7 @@ The message root is 'Syslog'.
                                 <xs:restriction base="xs:string">
                                   <xs:minLength value="1" />
                                   <xs:maxLength value="32" />
+                                  <xs:pattern value="[!-~-[= \]&quot;]]+" />
                                 </xs:restriction>
                               </xs:simpleType>
                             </xs:element>

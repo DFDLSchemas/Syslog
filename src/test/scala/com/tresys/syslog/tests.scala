@@ -53,7 +53,10 @@ class TestSyslog {
   @Test def test_syslog_example_02() = { runner.runOneTest("syslog_example_02") }
   @Test def test_syslog_example_03() = { runner.runOneTest("syslog_example_03") }
   @Test def test_syslog_example_04() = { runner.runOneTest("syslog_example_04") }
-
-  @Test def test_syslog_example_01_no_nano() = { runner.runOneTest("syslog_example_01_no_nano") }
-
+  @Test def test_syslog_timestamp_no_nano() = { runner.runOneTest("syslog_timestamp_no_nano") }
+  @Test def test_syslog_invalid_hostname_char() = { runner.runOneTest("syslog_invalid_hostname_char") }
+  @Test def test_syslog_invalid_msgid_length() = { runner.runOneTest("syslog_invalid_msgid_length") }
+  @Test def test_syslog_invalid_prival() = { runner.runOneTest("syslog_invalid_prival") }
+  @Test def test_syslog_invalid_sdid() = { runner.runOneTest("syslog_invalid_sdid") }
+  @Test def test_syslog_missing_hostname() = { runner.runOneTest("syslog_missing_hostname") }
 }
