@@ -48,8 +48,6 @@ The message root is 'Syslog'.
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
-           xmlns:fn="http://www.w3.org/2005/xpath-functions"
-           xmlns:daf="urn:ogf:dfdl:2013:imp:opensource.ncsa.illinois.edu:2012:ext"
            xmlns:sl="urn:syslog:1.0"
            targetNamespace="urn:syslog:1.0">
 
@@ -65,7 +63,7 @@ The message root is 'Syslog'.
         calendarCheckPolicy="strict" calendarDaysInFirstWeek="4"
         calendarFirstDayOfWeek="Monday" calendarLanguage="en-US"
         calendarObserveDST="yes" calendarPatternKind="explicit"
-        calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ" calendarTimeZone="UTC"
+        calendarTimeZone="UTC"
         choiceLengthKind="implicit" decimalSigned="yes"
         documentFinalTerminatorCanBeMissing="no" emptyValueDelimiterPolicy="none"
         encoding="US-ASCII" encodingErrorPolicy="replace" escapeSchemeRef=""
@@ -142,7 +140,10 @@ The message root is 'Syslog'.
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:element>
-                <xs:element name="Timestamp" type="xs:dateTime" nillable="true" />
+                <xs:choice>
+                  <xs:element name="Timestamp" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ssZZZZZ" nillable="true" />
+                  <xs:element name="TimestampNano" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ" nillable="true" />
+                </xs:choice>
                 <xs:element name="Hostname" nillable="true">
                   <xs:simpleType>
                     <xs:restriction base="xs:string">

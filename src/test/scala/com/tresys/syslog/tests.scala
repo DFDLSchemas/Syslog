@@ -54,4 +54,6 @@ class TestSyslog {
   @Test def test_syslog_example_03() = { runner.runOneTest("syslog_example_03") }
   @Test def test_syslog_example_04() = { runner.runOneTest("syslog_example_04") }
 
+  @Test def test_syslog_example_01_no_nano() = { runner.runOneTest("syslog_example_01_no_nano") }
+
 }

@@ -4,6 +4,7 @@
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
   xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
   xmlns:daf="urn:ogf:dfdl:2013:imp:opensource.ncsa.illinois.edu:2012:ext"
+  xmlns:sl="urn:syslog:1.0"
   defaultRoundTrip="true"
   defaultValidation="on">
 
@@ -15,12 +16,12 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <Syslog>
+        <sl:Syslog>
           <Header>
             <Facility>4</Facility>
             <Severity>2</Severity>
             <Version>1</Version>
-            <Timestamp>2003-10-11T22:14:15.003000+00:00</Timestamp>
+            <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
             <Hostname>mymachine.example.com</Hostname>
             <AppName>su</AppName>
             <ProcID xsi:nil="true" />
@@ -30,7 +31,7 @@
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
-        </Syslog>
+        </sl:Syslog>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -43,12 +44,12 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <Syslog>
+        <sl:Syslog>
           <Header>
             <Facility>20</Facility>
             <Severity>5</Severity>
             <Version>1</Version>
-            <Timestamp>2003-08-24T05:14:15.000000-07:00</Timestamp>
+            <TimestampNano>2003-08-24T05:14:15.000000-07:00</TimestampNano>
             <Hostname>192.0.2.1</Hostname>
             <AppName>myproc</AppName>
             <ProcID>8710</ProcID>
@@ -58,7 +59,7 @@
           <Message>
             <Any>%% It's time to make the do-nuts.</Any>
           </Message>
-        </Syslog>
+        </sl:Syslog>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -71,12 +72,12 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <Syslog>
+        <sl:Syslog>
           <Header>
             <Facility>20</Facility>
             <Severity>5</Severity>
             <Version>1</Version>
-            <Timestamp>2003-10-11T22:14:15.003000+00:00</Timestamp>
+            <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
             <Hostname>mymachine.example.com</Hostname>
             <AppName>evntslog</AppName>
             <ProcID xsi:nil="true" />
@@ -102,7 +103,7 @@
           <Message>
             <UTF8>An application event log entry...</UTF8>
           </Message>
-        </Syslog>
+        </sl:Syslog>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
@@ -115,12 +116,12 @@
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
-        <Syslog>
+        <sl:Syslog>
           <Header>
             <Facility>20</Facility>
             <Severity>5</Severity>
             <Version>1</Version>
-            <Timestamp>2003-10-11T22:14:15.003000+00:00</Timestamp>
+            <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
             <Hostname>mymachine.example.com</Hostname>
             <AppName>evntslog</AppName>
             <ProcID xsi:nil="true" />
@@ -146,7 +147,35 @@
               <SDID>examplePriority@32473</SDID>
             </SDElement>
           </StructuredData>
-        </Syslog>
+        </sl:Syslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_example_01_no_nano" root="Syslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
+    roundTrip='false'>
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:Syslog>
+          <Header>
+            <Facility>4</Facility>
+            <Severity>2</Severity>
+            <Version>1</Version>
+            <Timestamp>2003-10-11T22:14:15.000000+00:00</Timestamp>
+            <Hostname>mymachine.example.com</Hostname>
+            <AppName>su</AppName>
+            <ProcID xsi:nil="true" />
+            <MsgID>ID47</MsgID>
+          </Header>
+          <NoStructuredData />
+          <Message>
+            <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
+          </Message>
+        </sl:Syslog>
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
