@@ -508,4 +508,37 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
+  <tdml:parserTestCase name="syslog_cisco_example_01" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example of cisco logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="false"><![CDATA[<189>Original Address=192.168.1.1 77: Aug 31 22:26:04: %PARSER-5-CFGLOG_LOGGEDCMD: User:admin  logged command:interface GigabitEthernet1/0/22]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>23</Facility>
+          <Severity>5</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:Cisco>
+            <Header>
+              <SequenceNumber>77</SequenceNumber>
+              <TimestampMonth>Aug</TimestampMonth>
+              <TimestampDay>31</TimestampDay>
+              <TimestampTime>22:26:04.000000+00:00</TimestampTime>
+              <Facility>PARSER</Facility>
+              <Severity>5</Severity>
+              <Mnemonic>CFGLOG_LOGGEDCMD</Mnemonic>
+            </Header>
+            <Message>User:admin  logged command:interface GigabitEthernet1/0/22</Message>
+          </sl:Cisco>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+
 </tdml:testSuite>

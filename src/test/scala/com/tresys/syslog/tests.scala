@@ -63,4 +63,6 @@ class TestSyslog {
 
   @Test def test_syslog_3164_example_01() = { runner.runOneTest("syslog_3164_example_01") }
   @Test def test_syslog_3164_example_02() = { runner.runOneTest("syslog_3164_example_02") }
+
+  @Test def test_syslog_cisco_example_01() = { runner.runOneTest("syslog_cisco_example_01") }
 }

@@ -146,6 +146,7 @@ The message root is 'Syslog'.
         <xs:choice>
           <xs:element ref="sl:RFC5424" />
           <xs:element ref="sl:RFC3164" />
+          <xs:element ref="sl:Cisco" />
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
@@ -308,5 +309,60 @@ The message root is 'Syslog'.
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+
+  <xs:element name="Cisco">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Header">
+          <xs:complexType>
+            <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
+              <xs:element name="SequenceNumber" type="xs:int" dfdl:textNumberPattern="0" dfdl:terminator=":" />
+              <xs:element name="TimestampMonth" dfdl:lengthKind="explicit" dfdl:length="3">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:enumeration value="Jan" />
+                    <xs:enumeration value="Feb" />
+                    <xs:enumeration value="Mar" />
+                    <xs:enumeration value="Apr" />
+                    <xs:enumeration value="May" />
+                    <xs:enumeration value="Jun" />
+                    <xs:enumeration value="Jul" />
+                    <xs:enumeration value="Aug" />
+                    <xs:enumeration value="Sep" />
+                    <xs:enumeration value="Oct" />
+                    <xs:enumeration value="Nov" />
+                    <xs:enumeration value="Dec" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* #0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1" />
+                    <xs:maxInclusive value="31" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TimestampTime" type="xs:time" dfdl:calendarPattern="HH:mm:ss" dfdl:lengthKind="explicit" dfdl:length="8" dfdl:terminator=":" />
+              <xs:sequence dfdl:initiator="%%" dfdl:separator="-" dfdl:terminator=":">
+                <xs:element name="Facility" type="xs:string" />
+                <xs:element name="Severity" dfdl:textNumberPattern="0">
+                  <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                      <xs:minInclusive value="0" />
+                      <xs:maxInclusive value="7" />
+                    </xs:restriction>
+                  </xs:simpleType>
+                </xs:element>
+                <xs:element name="Mnemonic" type="xs:string" />
+              </xs:sequence>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Message" type="xs:string" dfdl:encoding="UTF-8" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
 
 </xs:schema>
