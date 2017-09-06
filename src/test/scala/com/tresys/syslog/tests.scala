@@ -59,4 +59,5 @@ class TestSyslog {
   @Test def test_syslog_invalid_prival() = { runner.runOneTest("syslog_invalid_prival") }
   @Test def test_syslog_invalid_sdid() = { runner.runOneTest("syslog_invalid_sdid") }
   @Test def test_syslog_missing_hostname() = { runner.runOneTest("syslog_missing_hostname") }
+  @Test def test_syslog_bad_original_address() = { runner.runOneTest("syslog_bad_original_address") }
 }

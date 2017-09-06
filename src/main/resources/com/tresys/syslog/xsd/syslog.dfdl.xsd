@@ -109,29 +109,53 @@ The message root is 'Syslog'.
     </xs:sequence>
   </xs:group>
 
-  <xs:element name="Syslog">
+  <xs:element name="SolarwindsSyslog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence dfdl:hiddenGroupRef="sl:Prival_hg" />
+        <xs:element name="Facility" dfdl:inputValueCalc="{ ../Prival idiv 8 }">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="0" />
+              <xs:maxInclusive value="23" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="Severity" dfdl:inputValueCalc="{ ../Prival mod 8 }">
+          <xs:simpleType>
+            <xs:restriction base="xs:int">
+              <xs:minInclusive value="0" />
+              <xs:maxInclusive value="7" />
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="OriginalAddress" dfdl:initiator="Original%SP;Address=" dfdl:terminator="%SP;">
+          <xs:complexType>
+            <xs:sequence dfdl:separator=".">
+              <xs:element name="Octet" minOccurs="4" maxOccurs="4" dfdl:occursCountKind="fixed" dfdl:textNumberPattern="##0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:int">
+                    <xs:minInclusive value="0" />
+                    <xs:maxInclusive value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:choice>
+          <xs:element ref="sl:RFC5424" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="RFC5424">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="Header">
           <xs:complexType>
             <xs:sequence>
-              <xs:sequence dfdl:hiddenGroupRef="sl:Prival_hg" />
-              <xs:element name="Facility" dfdl:inputValueCalc="{ ../Prival idiv 8 }">
-                <xs:simpleType>
-                  <xs:restriction base="xs:int">
-                    <xs:minInclusive value="0" />
-                    <xs:maxInclusive value="23" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="Severity" dfdl:inputValueCalc="{ ../Prival mod 8 }">
-                <xs:simpleType>
-                  <xs:restriction base="xs:int">
-                    <xs:minInclusive value="0" />
-                    <xs:maxInclusive value="7" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
               <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
                 <xs:element name="Version" dfdl:textNumberPattern="#0">
                   <xs:simpleType>
