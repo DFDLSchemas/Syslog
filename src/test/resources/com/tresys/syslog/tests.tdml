@@ -8,7 +8,7 @@
   defaultRoundTrip="true"
   defaultValidation="on">
 
-  <tdml:parserTestCase name="syslog_example_01" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_example_01" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -43,7 +43,7 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_example_02" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_example_02" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
@@ -78,7 +78,7 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_example_03" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_example_03" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
@@ -129,7 +129,7 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_example_04" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_example_04" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
@@ -180,7 +180,7 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_timestamp_no_nano" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_timestamp_no_nano" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -215,7 +215,7 @@
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_invalid_hostname_char" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_invalid_hostname_char" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="hostname constains an ascii control character">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.%#x07;example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -255,7 +255,7 @@
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_invalid_msgid_length" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_invalid_msgid_length" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="msgid is too long">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -297,7 +297,7 @@
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_invalid_prival" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_invalid_prival" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="prival is too large">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -339,7 +339,7 @@
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_invalid_sdid" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_invalid_sdid" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
@@ -395,7 +395,7 @@
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_missing_hostname" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_missing_hostname" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="missing hostname field">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -407,7 +407,7 @@
     </tdml:errors>
   </tdml:parserTestCase>
 
-  <tdml:parserTestCase name="syslog_bad_original_address" root="SolarwindsSyslog"
+  <tdml:parserTestCase name="syslog_5424_bad_original_address" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the solarwinds original address field invalid">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=256.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
@@ -446,6 +446,66 @@
       <tdml:error>maxInclusive</tdml:error>
       <tdml:error>Octet</tdml:error>
     </tdml:validationErrors>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_3164_example_01" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>4</Facility>
+          <Severity>2</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:RFC3164>
+            <Header>
+              <TimestampMonth>Oct</TimestampMonth>
+              <TimestampDay>11</TimestampDay>
+              <TimestampTime>22:14:15.000000+00:00</TimestampTime>
+              <Hostname>mymachine</Hostname>
+            </Header>
+            <Message>su: 'su root' failed for lonvick on /dev/pts/8</Message>
+          </sl:RFC3164>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_3164_example_02" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<13>Original Address=192.168.1.1 Feb  5 17:32:18 10.0.0.99 Use the BFG!]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>1</Facility>
+          <Severity>5</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:RFC3164>
+            <Header>
+              <TimestampMonth>Feb</TimestampMonth>
+              <TimestampDay>5</TimestampDay>
+              <TimestampTime>17:32:18.000000+00:00</TimestampTime>
+              <Hostname>10.0.0.99</Hostname>
+            </Header>
+            <Message>Use the BFG!</Message>
+          </sl:RFC3164>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
   </tdml:parserTestCase>
 
 </tdml:testSuite>
