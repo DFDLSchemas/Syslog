@@ -375,8 +375,8 @@ The message root is 'SolarwindsSyslog'.
             <xs:sequence>
               <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
                 <xs:choice>
-                  <xs:element name="Timestamp" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ssZZZZZ" nillable="true" />
-                  <xs:element name="TimestampNano" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ" nillable="true" />
+                  <xs:element name="Timestamp" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ssZZZZZ" />
+                  <xs:element name="TimestampNano" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSSSSZZZZZ" />
                 </xs:choice>
                 <xs:element name="Hostname">
                   <xs:simpleType>

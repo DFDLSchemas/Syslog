@@ -216,7 +216,7 @@
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_invalid_hostname_char" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="hostname constains an ascii control character">
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="hostname contains an ascii control character">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.%#x07;example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -540,5 +540,89 @@
       </tdml:dfdlInfoset>
     </tdml:infoset>
   </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_esxi_example_01" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<163>Original Address=192.168.1.1 2018-04-11T10:32:56.871Z mymachine.example.com Hostd: error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>20</Facility>
+          <Severity>3</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:ESXi>
+            <Header>
+              <TimestampNano>2018-04-11T10:32:56.871000+00:00</TimestampNano>
+              <Hostname>mymachine.example.com</Hostname>
+              <AppName>Hostd</AppName>
+            </Header>
+            <Message><![CDATA[error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></Message>
+          </sl:ESXi>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_esxi_example_02" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>1</Facility>
+          <Severity>7</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:ESXi>
+            <Header>
+              <Timestamp>2018-04-10T18:34:25.000000+00:00</Timestamp>
+              <Hostname>mymachine.example.com</Hostname>
+              <AppName>crond[12345]</AppName>
+            </Header>
+            <Message><![CDATA[crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></Message>
+          </sl:ESXi>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_esxi_missing_timestamp_info" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:errors>
+      <tdml:error>All alternatives failed</tdml:error>
+      <tdml:error>Convert to DateTime (for xs:dateTime): Failed</tdml:error>
+      <tdml:error>Schema context: TimestampNano</tdml:error>
+      <tdml:error>Schema context: Timestamp</tdml:error>
+    </tdml:errors>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_esxi_missing_message" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]:]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:errors>
+      <tdml:error>All alternatives failed</tdml:error>
+      <tdml:error>Delimiter not found</tdml:error>
+      <tdml:error>Schema context: sequence</tdml:error>
+    </tdml:errors>
+  </tdml:parserTestCase>
+
 
 </tdml:testSuite>
