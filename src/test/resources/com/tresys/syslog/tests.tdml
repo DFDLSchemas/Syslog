@@ -624,5 +624,46 @@
     </tdml:errors>
   </tdml:parserTestCase>
 
+  <tdml:parserTestCase name="syslog_failing_messages_nopad_timestamp" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 4 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:errors>
+      <tdml:error>All alternatives failed</tdml:error>
+      <tdml:error>Unable to parse '4 ' (using up all characters)</tdml:error>
+      <tdml:error>Schema context: TimestampDay</tdml:error>
+    </tdml:errors>
+  </tdml:parserTestCase>
+
+  <tdml:parserTestCase name="syslog_failing_messages_zeropad_timestamp" root="SolarwindsSyslog"
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
+    <tdml:document>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 04 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
+    </tdml:document>
+    <tdml:infoset>
+      <tdml:dfdlInfoset>
+        <sl:SolarwindsSyslog>
+          <Facility>16</Facility>
+          <Severity>3</Severity>
+          <OriginalAddress>
+            <Octet>192</Octet>
+            <Octet>168</Octet>
+            <Octet>1</Octet>
+            <Octet>1</Octet>
+          </OriginalAddress>
+          <sl:RFC3164>
+            <Header>
+              <TimestampMonth>Oct</TimestampMonth>
+              <TimestampDay>4</TimestampDay>
+              <TimestampTime>13:39:37.000000+00:00</TimestampTime>
+              <Hostname>localhost</Hostname>
+            </Header>
+            <Message>Syslog message 8656001952143 failed processing</Message>
+          </sl:RFC3164>
+        </sl:SolarwindsSyslog>
+      </tdml:dfdlInfoset>
+    </tdml:infoset>
+  </tdml:parserTestCase>
 
 </tdml:testSuite>

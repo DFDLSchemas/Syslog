@@ -70,4 +70,7 @@ class TestSyslog {
   @Test def test_syslog_esxi_example_02() = { runner.runOneTest("syslog_esxi_example_02") }
   @Test def test_syslog_esxi_missing_timestamp_info() = { runner.runOneTest("syslog_esxi_missing_timestamp_info") }
   @Test def test_syslog_esxi_missing_message() = { runner.runOneTest("syslog_esxi_missing_message") }
+
+  @Test def test_syslog_failing_messages_nopad_timestamp() = { runner.runOneTest("syslog_failing_messages_nopad_timestamp") }
+  @Test def test_syslog_failing_messages_zeropad_timestamp() = { runner.runOneTest("syslog_failing_messages_zeropad_timestamp") }
 }
