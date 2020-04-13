@@ -34,7 +34,7 @@
 package com.tresys.syslog
 
 import org.junit.Test
-import edu.illinois.ncsa.daffodil.tdml.Runner
+import org.apache.daffodil.tdml.Runner
 import org.junit.AfterClass
 
 object TestSyslog {
