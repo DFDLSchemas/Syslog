@@ -289,7 +289,7 @@ The message root is 'SolarwindsSyslog'.
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* #0">
+              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* 00">
                 <xs:simpleType>
                   <xs:restriction base="xs:int">
                     <xs:minInclusive value="1" />
@@ -338,7 +338,7 @@ The message root is 'SolarwindsSyslog'.
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* #0">
+              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* 00">
                 <xs:simpleType>
                   <xs:restriction base="xs:int">
                     <xs:minInclusive value="1" />
