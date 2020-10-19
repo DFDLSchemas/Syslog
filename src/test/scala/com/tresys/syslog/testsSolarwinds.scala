@@ -1,8 +1,8 @@
 
-/* Copyright (c) 2017 Tresys Technology, LLC. All rights reserved.
+/* Copyright (c) 2017-2020 Owl Cyber Defense. All rights reserved.
  *
- * Developed by: Tresys Technology, LLC
- *               http://www.tresys.com
+ * Developed by: Owl Cyber Defense (formerly Tresys Technology), LLC
+ *               http://www.owlcyberdefense.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal with
@@ -37,17 +37,17 @@ import org.junit.Test
 import org.apache.daffodil.tdml.Runner
 import org.junit.AfterClass
 
-object TestSyslog {
-  lazy val runner = Runner("/com/tresys/syslog/", "tests.tdml")
+object TestSolarwinds {
+  lazy val runner = Runner("/com/tresys/syslog/", "testsSolarwinds.tdml")
 
   @AfterClass def shutDown {
     runner.reset
   }
 }
 
-class TestSyslog {
+class TestSolarwinds {
 
-  import TestSyslog._
+  import TestSolarwinds._
 
   @Test def test_syslog_5424_example_01() = { runner.runOneTest("syslog_5424_example_01") }
   @Test def test_syslog_5424_example_02() = { runner.runOneTest("syslog_5424_example_02") }
@@ -59,7 +59,7 @@ class TestSyslog {
   @Test def test_syslog_5424_invalid_prival() = { runner.runOneTest("syslog_5424_invalid_prival") }
   @Test def test_syslog_5424_invalid_sdid() = { runner.runOneTest("syslog_5424_invalid_sdid") }
   @Test def test_syslog_5424_missing_hostname() = { runner.runOneTest("syslog_5424_missing_hostname") }
-  @Test def test_syslog_5424_bad_original_address() = { runner.runOneTest("syslog_5424_missing_hostname") }
+  @Test def test_syslog_5424_bad_original_address() = { runner.runOneTest("syslog_5424_bad_original_address") }
 
   @Test def test_syslog_3164_example_01() = { runner.runOneTest("syslog_3164_example_01") }
   @Test def test_syslog_3164_example_02() = { runner.runOneTest("syslog_3164_example_02") }

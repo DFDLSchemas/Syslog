@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (c) 2017-2020 Owl Cyber Defense. All rights reserved.
+
+Developed by: Owl Cyber Defense (formerly Tresys Technology) LLC
+              http://www.owlcyberdefense.com
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal with
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+ 1. Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimers.
+
+ 2. Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimers in the
+    documentation and/or other materials provided with the distribution.
+
+ 3. Neither the names of Tresys Technology, nor the names of its contributors
+    may be used to endorse or promote products derived from this Software
+    without specific prior written permission.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+CONTRIBUTORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS WITH THE
+SOFTWARE.
+-->
+
 <tdml:testSuite suiteName="Syslog"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
   xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
   xmlns:daf="urn:ogf:dfdl:2013:imp:opensource.ncsa.illinois.edu:2012:ext"
-  xmlns:sl="urn:syslog:1.1"
+  xmlns:sl="urn:syslog:1.2"
   defaultRoundTrip="true"
   defaultValidation="on">
 
@@ -13,6 +46,9 @@
   <tdml:parserTestCase name="syslog_5424_example_01" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
     roundTrip="twoPass">
+    <!--
+      twoPass due to canonicalization fractional seconds to SSSSSS
+     -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -54,6 +90,10 @@
   <tdml:parserTestCase name="syslog_5424_example_02" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
     roundTrip="twoPass">
+    <!--
+    twoPass because data contains 14:15.000003, but ICU library precision drops the final 3 digit
+    so that the unparsed data is 14:15.000000
+    -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
     </tdml:document>
@@ -91,6 +131,9 @@
   <tdml:parserTestCase name="syslog_5424_example_03" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
     roundTrip="twoPass">
+    <!--
+      twoPass because expected data has 14:15.003, which is canonicalized to 14:15.003000 by the parse
+    -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
@@ -144,6 +187,9 @@
   <tdml:parserTestCase name="syslog_5424_example_04" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
     roundTrip="twoPass">
+    <!--
+     twoPass because expected data has 14:15.003, which is canonicalized to 14:15.003000 by the parse
+     -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
     </tdml:document>
@@ -314,6 +360,9 @@
   <tdml:parserTestCase name="syslog_5424_invalid_prival" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="prival is too large"
     roundTrip="twoPass">
+    <!--
+      twoPass due to canonicalization of fractional seconds to SSSSSS
+     -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -356,10 +405,9 @@
 
   <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_invalid_sdid" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character"
-    roundTrip="twoPass">
+    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003000Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -419,7 +467,7 @@
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
-      <tdml:error>Initiator</tdml:error>
+      <tdml:error>Initiator '-' not found</tdml:error>
       <tdml:error>Failed to populate SDElement</tdml:error>
     </tdml:errors>
   </tdml:parserTestCase>
@@ -502,6 +550,7 @@
   <tdml:parserTestCase name="syslog_3164_example_02" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164"
     roundTrip="twoPass">
+    <!-- twoPass because data has Feb 5, not Feb 05 -->
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<13>Original Address=192.168.1.1 Feb  5 17:32:18 10.0.0.99 Use the BFG!]]></tdml:documentPart>
     </tdml:document>
@@ -571,7 +620,7 @@
   -->
   <tdml:parserTestCase name="syslog_esxi_example_01" root="SolarwindsSyslog"
     model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs"
-    roundTrip="twoPass">
+   >
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<163>Original Address=192.168.1.1 2018-04-11T10:32:56.871Z mymachine.example.com Hostd: error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></tdml:documentPart>
     </tdml:document>
@@ -636,6 +685,10 @@
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
       <tdml:error>Separator</tdml:error>
+      <tdml:error>xs:dateTime</tdml:error>
+      <tdml:error>mymachine.example.com</tdml:error>
+      <tdml:error>Schema context: TimestampNano</tdml:error>
+      <tdml:error>Schema context: Timestamp</tdml:error>
     </tdml:errors>
   </tdml:parserTestCase>
 
@@ -647,6 +700,7 @@
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
       <tdml:error>Separator</tdml:error>
+      <tdml:error>Separator ' ' not found</tdml:error>
       <tdml:error>Schema context: sequence</tdml:error>
     </tdml:errors>
   </tdml:parserTestCase>
@@ -660,6 +714,10 @@
       <tdml:error>alternatives failed</tdml:error>
       <tdml:error>Separator</tdml:error>
       <tdml:error>Not Found</tdml:error>
+      <tdml:error>Unable to parse</tdml:error>
+      <tdml:error>xs:int</tdml:error>
+      <tdml:error>text: 4</tdml:error>
+      <tdml:error>Schema context: TimestampDay</tdml:error>
     </tdml:errors>
   </tdml:parserTestCase>
 
