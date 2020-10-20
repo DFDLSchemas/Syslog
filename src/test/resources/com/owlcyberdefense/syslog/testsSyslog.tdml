@@ -19,7 +19,7 @@ so, subject to the following conditions:
     notice, this list of conditions and the following disclaimers in the
     documentation and/or other materials provided with the distribution.
 
- 3. Neither the names of Tresys Technology, nor the names of its contributors
+ 3. Neither the names of Owl Cyber Defense, nor the names of its contributors
     may be used to endorse or promote products derived from this Software
     without specific prior written permission.
 
@@ -37,14 +37,15 @@ SOFTWARE.
                 xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
                 xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
                 xmlns:daf="urn:ogf:dfdl:2013:imp:opensource.ncsa.illinois.edu:2012:ext"
-                xmlns:sl="urn:syslog:1.2"
+                xmlns:sl="urn:syslog"
                 defaultRoundTrip="true"
-                defaultValidation="on">
+                defaultValidation="on"
+                defaultImplementations="daffodil">
 
   <tdml:parserTestCase name="syslog_example_01" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15.003000Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -59,7 +60,6 @@ SOFTWARE.
             <ProcID xsi:nil="true" />
             <MsgID>ID47</MsgID>
           </Header>
-          <NoStructuredData />
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
@@ -69,9 +69,9 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_example_02" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-08-24T05:14:15.000000-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-08-24T05:14:15.000-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -86,7 +86,6 @@ SOFTWARE.
             <ProcID>8710</ProcID>
             <MsgID xsi:nil="true" />
           </Header>
-          <NoStructuredData />
           <Message>
             <Any>%% It's time to make the do-nuts.</Any>
           </Message>
@@ -96,9 +95,9 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_example_03" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003000Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -139,9 +138,9 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_example_04" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003000Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -182,7 +181,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_timestamp_no_nano" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -199,7 +198,6 @@ SOFTWARE.
             <ProcID xsi:nil="true" />
             <MsgID>ID47</MsgID>
           </Header>
-          <NoStructuredData />
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
@@ -209,7 +207,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_invalid_hostname_char" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="hostname constains an ascii control character">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="hostname constains an ascii control character">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15Z mymachine.%#x07;example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -226,7 +224,6 @@ SOFTWARE.
             <ProcID xsi:nil="true" />
             <MsgID>ID47</MsgID>
           </Header>
-          <NoStructuredData />
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
@@ -241,7 +238,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_invalid_msgid_length" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="msgid is too long">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="msgid is too long">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15Z mymachine.example.com su - ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -258,7 +255,6 @@ SOFTWARE.
             <ProcID xsi:nil="true" />
             <MsgID>ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012</MsgID>
           </Header>
-          <NoStructuredData />
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
@@ -275,9 +271,9 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_invalid_prival" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="prival is too large">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="prival is too large">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>1 2003-10-11T22:14:15.003000Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -292,7 +288,6 @@ SOFTWARE.
             <ProcID xsi:nil="true" />
             <MsgID>ID47</MsgID>
           </Header>
-          <NoStructuredData />
           <Message>
             <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
           </Message>
@@ -309,9 +304,9 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_invalid_sdid" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003000Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -357,7 +352,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_missing_hostname" root="Syslog"
-                       model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="missing hostname field">
+                       model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="missing hostname field">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>1 2003-10-11T22:14:15.003000Z su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>

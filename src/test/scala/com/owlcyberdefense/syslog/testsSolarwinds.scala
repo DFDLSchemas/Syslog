@@ -18,7 +18,7 @@
  *     notice, this list of conditions and the following disclaimers in the
  *     documentation and/or other materials provided with the distribution.
  *
- *  3. Neither the names of Tresys Technology, nor the names of its contributors
+ *  3. Neither the names of Owl Cyber Defense, nor the names of its contributors
  *     may be used to endorse or promote products derived from this Software
  *     without specific prior written permission.
  *
@@ -31,14 +31,14 @@
  * SOFTWARE.
  */
 
-package com.tresys.syslog
+package com.owlcyberdefense.syslog
 
 import org.junit.Test
 import org.apache.daffodil.tdml.Runner
 import org.junit.AfterClass
 
 object TestSolarwinds {
-  lazy val runner = Runner("/com/tresys/syslog/", "testsSolarwinds.tdml")
+  lazy val runner = Runner("/com/owlcyberdefense/syslog/", "testsSolarwinds.tdml")
 
   @AfterClass def shutDown {
     runner.reset

@@ -19,7 +19,7 @@ so, subject to the following conditions:
     notice, this list of conditions and the following disclaimers in the
     documentation and/or other materials provided with the distribution.
 
- 3. Neither the names of Tresys Technology, nor the names of its contributors
+ 3. Neither the names of Owl Cyber Defense, nor the names of its contributors
     may be used to endorse or promote products derived from this Software
     without specific prior written permission.
 
@@ -38,17 +38,14 @@ SOFTWARE.
   xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/"
   xmlns:tdml="http://www.ibm.com/xmlns/dfdl/testData"
   xmlns:daf="urn:ogf:dfdl:2013:imp:opensource.ncsa.illinois.edu:2012:ext"
-  xmlns:sl="urn:syslog:1.2"
+  xmlns:sl="urn:syslog"
   defaultRoundTrip="true"
-  defaultValidation="on">
+  defaultValidation="on"
+  defaultImplementations="daffodil">
 
   <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_example_01" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
-    roundTrip="twoPass">
-    <!--
-      twoPass due to canonicalization fractional seconds to SSSSSS
-     -->
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -72,7 +69,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -82,13 +78,8 @@ SOFTWARE.
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <!--
-    roundTrip='twoPass'
-    This is because we don't have full microsecond resolution, so
-    15.000003-07:00 unparses to 15.000000-07:00.
-    -->
   <tdml:parserTestCase name="syslog_5424_example_02" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
     roundTrip="twoPass">
     <!--
     twoPass because data contains 14:15.000003, but ICU library precision drops the final 3 digit
@@ -117,7 +108,6 @@ SOFTWARE.
               <ProcID>8710</ProcID>
               <MsgID xsi:nil="true" />
             </Header>
-            <NoStructuredData />
             <Message>
               <Any>%% It's time to make the do-nuts.</Any>
             </Message>
@@ -127,13 +117,8 @@ SOFTWARE.
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_example_03" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
-    roundTrip="twoPass">
-    <!--
-      twoPass because expected data has 14:15.003, which is canonicalized to 14:15.003000 by the parse
-    -->
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
@@ -183,13 +168,8 @@ SOFTWARE.
     </tdml:infoset>
   </tdml:parserTestCase>
 
-  <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_example_04" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424"
-    roundTrip="twoPass">
-    <!--
-     twoPass because expected data has 14:15.003, which is canonicalized to 14:15.003000 by the parse
-     -->
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
     </tdml:document>
@@ -240,7 +220,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_timestamp_no_nano" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -264,7 +244,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -275,7 +254,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_invalid_hostname_char" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="hostname contains an ascii control character">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="hostname contains an ascii control character">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.%#x07;example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -299,7 +278,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -315,7 +293,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_invalid_msgid_length" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="msgid is too long">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="msgid is too long">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -339,7 +317,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -356,13 +333,8 @@ SOFTWARE.
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_invalid_prival" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="prival is too large"
-    roundTrip="twoPass">
-    <!--
-      twoPass due to canonicalization of fractional seconds to SSSSSS
-     -->
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="prival is too large">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -386,7 +358,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -403,11 +374,10 @@ SOFTWARE.
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
-  <!-- twoPass because canonical form provides 6 fractional seconds, but data has only 3 -->
   <tdml:parserTestCase name="syslog_5424_invalid_sdid" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="sdid contains an invalid character">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003000Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -461,7 +431,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_missing_hostname" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="missing hostname field">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="missing hostname field">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -473,7 +443,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_5424_bad_original_address" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the solarwinds original address field invalid">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-5424, without the solarwinds original address field invalid">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=256.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -497,7 +467,6 @@ SOFTWARE.
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
-            <NoStructuredData />
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -514,7 +483,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_3164_example_01" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
@@ -548,7 +517,7 @@ SOFTWARE.
        This is not due to any bug.
        Cannonical form of this data needs the leading zero on the day of month. -->
   <tdml:parserTestCase name="syslog_3164_example_02" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164"
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from rfc-3164"
     roundTrip="twoPass">
     <!-- twoPass because data has Feb 5, not Feb 05 -->
     <tdml:document>
@@ -580,7 +549,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_cisco_example_01" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example of cisco logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example of cisco logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="false"><![CDATA[<189>Original Address=192.168.1.1 77: Aug 31 22:26:04: %PARSER-5-CFGLOG_LOGGEDCMD: User:admin  logged command:interface GigabitEthernet1/0/22]]></tdml:documentPart>
     </tdml:document>
@@ -619,7 +588,7 @@ SOFTWARE.
    timestamp. Data that does not include 6 fraction digits will unparse to have them.
   -->
   <tdml:parserTestCase name="syslog_esxi_example_01" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs"
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs"
    >
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<163>Original Address=192.168.1.1 2018-04-11T10:32:56.871Z mymachine.example.com Hostd: error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></tdml:documentPart>
@@ -649,7 +618,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_esxi_example_02" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
     </tdml:document>
@@ -678,7 +647,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_esxi_missing_timestamp_info" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
     </tdml:document>
@@ -693,7 +662,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_esxi_missing_message" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]:]]></tdml:documentPart>
     </tdml:document>
@@ -706,7 +675,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_failing_messages_nopad_timestamp" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 4 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
     </tdml:document>
@@ -722,7 +691,7 @@ SOFTWARE.
   </tdml:parserTestCase>
 
   <tdml:parserTestCase name="syslog_failing_messages_zeropad_timestamp" root="SolarwindsSyslog"
-    model="com/tresys/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
+    model="com/owlcyberdefense/syslog/xsd/syslog.dfdl.xsd" description="example from solarwinds failed message logs">
     <tdml:document>
       <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 04 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
     </tdml:document>

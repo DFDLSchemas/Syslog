@@ -1,8 +1,8 @@
-name := "dfdl-syslog-solarwinds"
+name := "dfdl-syslog"
  
-organization := "com.tresys"
+organization := "com.owlcyberdefense"
  
-version := "0.1.2"
+version := "1.0.0"
  
 scalaVersion := "2.12.11"
  
