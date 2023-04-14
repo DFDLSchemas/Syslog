@@ -2,7 +2,7 @@ name := "dfdl-syslog"
  
 organization := "com.owlcyberdefense"
  
-version := "1.0.0"
+version := "2.0.0"
  
 scalaVersion := "2.12.11"
  
