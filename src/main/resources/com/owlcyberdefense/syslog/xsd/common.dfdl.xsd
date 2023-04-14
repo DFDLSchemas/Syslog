@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2017-2020 Owl Cyber Defense. All rights reserved.
+Copyright (c) 2017-2023 Owl Cyber Defense. All rights reserved.
 
 Developed by: Owl Cyber Defense (formerly Tresys Technology) LLC
               http://www.owlcyberdefense.com
@@ -53,7 +53,7 @@ SOFTWARE.
                    calendarTimeZone="UTC"
                    choiceLengthKind="implicit" decimalSigned="yes"
                    documentFinalTerminatorCanBeMissing="no" emptyValueDelimiterPolicy="none"
-                   encoding="iso-8859-1" encodingErrorPolicy="error" escapeSchemeRef=""
+                   encoding="iso-8859-1" encodingErrorPolicy="replace" escapeSchemeRef=""
                    fillByte="%NUL;" floating="no" ignoreCase="no" initiatedContent="no"
                    initiator="" leadingSkip="0" lengthKind="delimited" lengthUnits="bytes"
                    nilKind="literalValue" nilValueDelimiterPolicy="none" nilValue="-"
@@ -84,310 +84,84 @@ SOFTWARE.
     </xs:appinfo>
   </xs:annotation>
 
-  <xs:simpleType name="PrivalType" dfdl:textNumberPattern="##0" dfdl:initiator="&lt;" dfdl:terminator="&gt;">
+  <xs:simpleType name="PriorityValueType" dfdl:textNumberPattern="##0" dfdl:initiator="&lt;" dfdl:terminator="&gt;">
     <xs:restriction base="xs:int">
       <xs:minInclusive value="0" />
       <xs:maxInclusive value="191" />
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:group name="SolarwindsSyslogBodyGroup">
+  <xs:group name="PriorityValue_hg">
     <xs:sequence>
-      <xs:element name="OriginalAddress" dfdl:initiator="Original%SP;Address=" dfdl:terminator="%SP;">
-        <xs:complexType>
-          <xs:sequence dfdl:separator=".">
-            <xs:element name="Octet" minOccurs="4" maxOccurs="4" dfdl:occursCountKind="fixed" dfdl:textNumberPattern="##0">
-              <xs:simpleType>
-                <xs:restriction base="xs:int">
-                  <xs:minInclusive value="0" />
-                  <xs:maxInclusive value="255" />
-                </xs:restriction>
-              </xs:simpleType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:choice>
-        <xs:element ref="sl:RFC5424" />
-        <xs:element ref="sl:RFC3164" />
-        <xs:element ref="sl:Cisco" />
-        <xs:element ref="sl:ESXi" />
-      </xs:choice>
+      <xs:element name="PriorityValue" type="sl:PriorityValueType" dfdl:outputValueCalc="{ ../Facility * 8 + ../Severity }"/>
     </xs:sequence>
   </xs:group>
 
-  <xs:group name="rfc5424headerGroup2">
-    <xs:sequence>
-      <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
-        <xs:element name="Version" type="xs:int" dfdl:textNumberPattern="#0">
-          <xs:annotation>
-            <xs:appinfo source="http://www.ogf.org/dfdl/">
-              <dfdl:discriminator test="{ . eq 1 }" />
-            </xs:appinfo>
-          </xs:annotation>
-        </xs:element>
-        <xs:choice>
-          <xs:element name="Timestamp" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ssXXX" nillable="true" />
-          <xs:element name="TimestampNano" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSXXX" nillable="true" />
-        </xs:choice>
-        <xs:element name="Hostname" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:minLength value="1" />
-              <xs:maxLength value="255" />
-              <xs:pattern value="[!-~]+" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element name="AppName" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:minLength value="1" />
-              <xs:maxLength value="48" />
-              <xs:pattern value="[!-~]+" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element name="ProcID" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:minLength value="1" />
-              <xs:maxLength value="128" />
-              <xs:pattern value="[!-~]+" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-        <xs:element name="MsgID" nillable="true">
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:minLength value="1" />
-              <xs:maxLength value="32" />
-              <xs:pattern value="[!-~]+" />
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:element>
-      </xs:sequence>
-    </xs:sequence>
-  </xs:group>
-
-  <xs:group name="rfc5424BodyGroup">
-    <xs:sequence>
-      <xs:choice>
-        <!--
-        NoStructuredData was an element with length="0" and an initiator="-"
-        but that's not portable as IBM DFDL doesn't put that into the infoset.
-        So we model this as a length 1 element instead.
-
-        <xs:element name="NoStructuredData" type="xs:string" dfdl:lengthKind="explicit" dfdl:length="1">
-          <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:assert>{ . eq '-' }</dfdl:assert>
-          </xs:appinfo>
-          </xs:annotation>
-        </xs:element>
-        -->
-        <xs:sequence dfdl:initiator="-"/>
-        <xs:element name="StructuredData">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="SDElement" maxOccurs="unbounded">
-                <xs:complexType>
-                  <xs:sequence dfdl:initiator="[" dfdl:terminator="]" dfdl:separator="%SP;">
-                    <xs:element name="SDID">
-                      <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                          <xs:minLength value="1" />
-                          <xs:maxLength value="32" />
-                          <xs:pattern value="[!-~-[= \]&quot;]]+" />
-                        </xs:restriction>
-                      </xs:simpleType>
-                    </xs:element>
-                    <xs:element name="SDParam" minOccurs="0" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence dfdl:separator="=">
-                          <xs:element name="ParamName">
-                            <xs:simpleType>
-                              <xs:restriction base="xs:string">
-                                <xs:minLength value="1" />
-                                <xs:maxLength value="32" />
-                                <xs:pattern value="[!-~-[= \]&quot;]]+" />
-                              </xs:restriction>
-                            </xs:simpleType>
-                          </xs:element>
-                          <xs:element name="ParamValue" type="xs:string" dfdl:encoding="UTF-8" dfdl:escapeSchemeRef="sl:paramValueES" />
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:sequence>
-                </xs:complexType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-      </xs:choice>
-      <xs:element name="Message" minOccurs="0" dfdl:initiator="%SP;">
-        <xs:complexType>
-          <xs:choice>
-            <xs:element name="UTF8" dfdl:initiator="%#xEF;%#xBB;%#xBF;" type="xs:string" dfdl:encoding="UTF-8" />
-            <xs:element name="Any" type="xs:string" dfdl:encoding="US-ASCII" />
-          </xs:choice>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-
-  <xs:element name="RFC5424" type="sl:SolarwindsRFC5424"/>
-
-  <xs:complexType name="SolarwindsRFC5424">
+  <xs:group name="PriorityValue">
     <xs:annotation>
       <xs:documentation>
-        The parts of RFC5424 Syslog record after the solarwinds-specific fields.
+        Defines a Priority Value group that can be used with Daffodil to extract
+        severity/facility information. To use this, uncomment this and the
+        PriorityValue_hg group and comment out the below PriorityValue group.
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="Header">
-        <xs:complexType>
-          <xs:group ref="sl:rfc5424headerGroup2"/>
-        </xs:complexType>
+      <xs:sequence dfdl:hiddenGroupRef="sl:PriorityValue_hg" />
+      <xs:element name="Facility" dfdl:inputValueCalc="{ ../PriorityValue idiv 8 }">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="23" />
+          </xs:restriction>
+        </xs:simpleType>
       </xs:element>
-      <xs:group ref="sl:rfc5424BodyGroup"/>
+      <xs:element name="Severity" dfdl:inputValueCalc="{ ../PriorityValue mod 8 }">
+        <xs:simpleType>
+          <xs:restriction base="xs:int">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="7" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
     </xs:sequence>
-  </xs:complexType>
+  </xs:group>
 
-  <xs:element name="RFC3164">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Header">
-          <xs:complexType>
-            <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
-              <xs:element name="TimestampMonth" dfdl:lengthKind="explicit" dfdl:length="3">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:enumeration value="Jan" />
-                    <xs:enumeration value="Feb" />
-                    <xs:enumeration value="Mar" />
-                    <xs:enumeration value="Apr" />
-                    <xs:enumeration value="May" />
-                    <xs:enumeration value="Jun" />
-                    <xs:enumeration value="Jul" />
-                    <xs:enumeration value="Aug" />
-                    <xs:enumeration value="Sep" />
-                    <xs:enumeration value="Oct" />
-                    <xs:enumeration value="Nov" />
-                    <xs:enumeration value="Dec" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* 00">
-                <xs:simpleType>
-                  <xs:restriction base="xs:int">
-                    <xs:minInclusive value="1" />
-                    <xs:maxInclusive value="31" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="TimestampTime" type="xs:time" dfdl:calendarPattern="HH:mm:ss" dfdl:lengthKind="explicit" dfdl:length="8" />
-              <xs:element name="Hostname">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:pattern value="[!-~]+" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Message" type="xs:string" dfdl:encoding="UTF-8" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <!--
+  <xs:group name="PriorityValue">
+    <xs:annotation>
+      <xs:documentation>
+        Defines a PriorityValue group that can be used with IBM DFDL but loses
+        severity/facility information. To use this, uncomment this group and
+        comment the above PriorityValue and PriorityValue_hg groups
+      </xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PriorityValue" type="PriorityValueType" />
+    </xs:sequence>
+  </xs:group>
+  -->
 
-  <xs:element name="Cisco">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Header">
-          <xs:complexType>
-            <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
-              <xs:element name="SequenceNumber" type="xs:int" dfdl:textNumberPattern="0" dfdl:terminator=":" />
-              <xs:element name="TimestampMonth" dfdl:lengthKind="explicit" dfdl:length="3">
-                <xs:simpleType>
-                  <xs:restriction base="xs:string">
-                    <xs:enumeration value="Jan" />
-                    <xs:enumeration value="Feb" />
-                    <xs:enumeration value="Mar" />
-                    <xs:enumeration value="Apr" />
-                    <xs:enumeration value="May" />
-                    <xs:enumeration value="Jun" />
-                    <xs:enumeration value="Jul" />
-                    <xs:enumeration value="Aug" />
-                    <xs:enumeration value="Sep" />
-                    <xs:enumeration value="Oct" />
-                    <xs:enumeration value="Nov" />
-                    <xs:enumeration value="Dec" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="TimestampDay" dfdl:lengthKind="explicit" dfdl:length="2" dfdl:textNumberPattern="* 00">
-                <xs:simpleType>
-                  <xs:restriction base="xs:int">
-                    <xs:minInclusive value="1" />
-                    <xs:maxInclusive value="31" />
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
-              <xs:element name="TimestampTime" type="xs:time" dfdl:calendarPattern="HH:mm:ss" dfdl:lengthKind="explicit" dfdl:length="8" dfdl:terminator=":" />
-              <xs:sequence dfdl:initiator="%%" dfdl:separator="-" dfdl:terminator=":">
-                <xs:element name="Facility" type="xs:string" />
-                <xs:element name="Severity" dfdl:textNumberPattern="0">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                      <xs:minInclusive value="0" />
-                      <xs:maxInclusive value="7" />
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:element>
-                <xs:element name="Mnemonic" type="xs:string" />
-              </xs:sequence>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Message" type="xs:string" dfdl:encoding="UTF-8" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:simpleType name="month3" dfdl:lengthKind="explicit" dfdl:length="3">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Jan" />
+      <xs:enumeration value="Feb" />
+      <xs:enumeration value="Mar" />
+      <xs:enumeration value="Apr" />
+      <xs:enumeration value="May" />
+      <xs:enumeration value="Jun" />
+      <xs:enumeration value="Jul" />
+      <xs:enumeration value="Aug" />
+      <xs:enumeration value="Sep" />
+      <xs:enumeration value="Oct" />
+      <xs:enumeration value="Nov" />
+      <xs:enumeration value="Dec" />
+    </xs:restriction>
+  </xs:simpleType>
 
-  <xs:element name="ESXi">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element name="Header">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:sequence dfdl:separator="%SP;" dfdl:separatorPosition="postfix">
-                <xs:choice>
-                  <xs:element name="Timestamp" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ssXXX" />
-                  <xs:element name="TimestampNano" type="xs:dateTime" dfdl:calendarPattern="yyyy-MM-dd'T'HH:mm:ss.SSSXXX" />
-                </xs:choice>
-                <xs:element name="Hostname">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                      <xs:pattern value="[!-~]+" />
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:element>
-                <xs:element name="AppName" dfdl:terminator=":">
-                  <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                      <xs:pattern value="[!-~]+" />
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:element>
-              </xs:sequence>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="Message" type="xs:string" dfdl:encoding="UTF-8" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
+  <xs:simpleType name="msgStr">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="9999" />
+    </xs:restriction>
+  </xs:simpleType>
 
 </xs:schema>

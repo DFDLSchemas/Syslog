@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright (c) 2017-2020 Owl Cyber Defense. All rights reserved.
+Copyright (c) 2017-2023 Owl Cyber Defense. All rights reserved.
 
 Developed by: Owl Cyber Defense (formerly Tresys Technology) LLC
               http://www.owlcyberdefense.com
@@ -38,84 +38,39 @@ SOFTWARE.
            xmlns:sl="urn:syslog"
            targetNamespace="urn:syslog">
 
+  <xs:include schemaLocation="common.dfdl.xsd" />
+  <xs:include schemaLocation="syslog-rfc5424.dfdl.xsd" />
+  <xs:include schemaLocation="syslog-rfc3164.dfdl.xsd" />
+  <xs:include schemaLocation="syslog-cisco.dfdl.xsd" />
+  <xs:include schemaLocation="syslog-esxi.dfdl.xsd" />
 
-  <xs:include schemaLocation="common.dfdl.xsd"/>
   <xs:annotation>
     <xs:appinfo source="http://www.ogf.org/dfdl/">
-      <dfdl:format ref="sl:common"/>
+      <dfdl:format ref="sl:common" />
     </xs:appinfo>
   </xs:annotation>
 
   <xs:element name="Syslog">
     <xs:annotation>
       <xs:documentation>
-        A standard RFC5424 Syslog record.
+        Defines a root element that supports all variants of syslog of messages.
       </xs:documentation>
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="Header">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:group ref="sl:rfc5424headerGroup1"/>
-              <xs:group ref="sl:rfc5424headerGroup2"/>
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
-        <xs:group ref="sl:rfc5424BodyGroup"/>
+        <xs:group ref="sl:PriorityValue" />
+        <xs:group ref="sl:AllVariants" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="SolarwindsSyslog">
-    <xs:annotation>
-      <xs:documentation>
-        Solarwinds encapsulation of a variety of syslog record types including
-        RFC5424, RFC3164, Cisco, and ESXi variants.
-      </xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:group ref="sl:rfc5424headerGroup1"/>
-        <xs:group ref="sl:SolarwindsSyslogBodyGroup"/>
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-
-  <xs:group name="Prival_hg">
-    <xs:sequence>
-      <xs:element name="Prival" type="sl:PrivalType"  dfdl:outputValueCalc="{ ../Facility * 8 + ../Severity }"/>
-    </xs:sequence>
+  <xs:group name="AllVariants">
+    <xs:choice>
+      <xs:element name="RFC5424" type="sl:RFC5424" />
+      <xs:element name="RFC3164" type="sl:RFC3164" />
+      <xs:element name="Cisco" type="sl:Cisco" />
+      <xs:element name="ESXi" type="sl:ESXi" />
+    </xs:choice>
   </xs:group>
-
-  <xs:group name="rfc5424headerGroup1">
-    <xs:sequence>
-      <xs:sequence dfdl:hiddenGroupRef="sl:Prival_hg" />
-      <xs:element name="Facility" dfdl:inputValueCalc="{ ../Prival idiv 8 }">
-        <xs:simpleType>
-          <xs:restriction base="xs:int">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="23" />
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-      <xs:element name="Severity" dfdl:inputValueCalc="{ ../Prival mod 8 }">
-        <xs:simpleType>
-          <xs:restriction base="xs:int">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="7" />
-          </xs:restriction>
-        </xs:simpleType>
-      </xs:element>
-    </xs:sequence>
-  </xs:group>
-
-  <xs:element name="SolarwindsSyslogBundle">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element ref="sl:SolarwindsSyslog" minOccurs="1" maxOccurs="unbounded" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 
 </xs:schema>
