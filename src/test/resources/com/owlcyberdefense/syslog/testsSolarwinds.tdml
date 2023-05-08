@@ -63,12 +63,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2003-10-11T22:14:15.003000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -108,6 +109,7 @@ SOFTWARE.
               <ProcID>8710</ProcID>
               <MsgID xsi:nil="true" />
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <Any>%% It's time to make the do-nuts.</Any>
             </Message>
@@ -136,7 +138,7 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2003-10-11T22:14:15.003000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>evntslog</AppName>
               <ProcID xsi:nil="true" />
@@ -187,7 +189,7 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2003-10-11T22:14:15.003000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>evntslog</AppName>
               <ProcID xsi:nil="true" />
@@ -238,12 +240,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <Timestamp>2003-10-11T22:14:15+00:00</Timestamp>
+              <Timestamp xsi:type="xs:dateTime">2003-10-11T22:14:15+00:00</Timestamp>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -272,12 +275,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <Timestamp>2003-10-11T22:14:15+00:00</Timestamp>
+              <Timestamp xsi:type="xs:dateTime">2003-10-11T22:14:15+00:00</Timestamp>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -310,12 +314,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <Timestamp>2003-10-11T22:14:15+00:00</Timestamp>
+              <Timestamp xsi:type="xs:dateTime">2003-10-11T22:14:15+00:00</Timestamp>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -348,12 +353,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2003-10-11T22:14:15.003000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -389,7 +395,7 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <TimestampNano>2003-10-11T22:14:15.003000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2003-10-11T22:14:15.003000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>evntslog</AppName>
               <ProcID xsi:nil="true" />
@@ -433,7 +439,7 @@ SOFTWARE.
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
-      <tdml:error>Initiator '-' not found</tdml:error>
+      <tdml:error>Assertion failed</tdml:error>
       <tdml:error>Failed to populate SDElement</tdml:error>
     </tdml:errors>
   </tdml:parserTestCase>
@@ -457,12 +463,13 @@ SOFTWARE.
           <RFC5424>
             <Header>
               <Version>1</Version>
-              <Timestamp>2003-10-11T22:14:15+00:00</Timestamp>
+              <Timestamp xsi:type="xs:dateTime">2003-10-11T22:14:15+00:00</Timestamp>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>su</AppName>
               <ProcID xsi:nil="true" />
               <MsgID>ID47</MsgID>
             </Header>
+            <NoStructuredData>-</NoStructuredData>
             <Message>
               <UTF8>'su root' failed for lonvick on /dev/pts/8</UTF8>
             </Message>
@@ -498,7 +505,7 @@ SOFTWARE.
             <Header>
               <TimestampMonth>Oct</TimestampMonth>
               <TimestampDay>11</TimestampDay>
-              <TimestampTime>22:14:15+00:00</TimestampTime>
+              <TimestampTime xsi:type="xs:time">22:14:15+00:00</TimestampTime>
               <Hostname>mymachine</Hostname>
             </Header>
             <Message>su: 'su root' failed for lonvick on /dev/pts/8</Message>
@@ -534,7 +541,7 @@ SOFTWARE.
             <Header>
               <TimestampMonth>Feb</TimestampMonth>
               <TimestampDay>5</TimestampDay>
-              <TimestampTime>17:32:18+00:00</TimestampTime>
+              <TimestampTime xsi:type="xs:time">17:32:18+00:00</TimestampTime>
               <Hostname>10.0.0.99</Hostname>
             </Header>
             <Message>Use the BFG!</Message>
@@ -565,7 +572,7 @@ SOFTWARE.
               <SequenceNumber>77</SequenceNumber>
               <TimestampMonth>Aug</TimestampMonth>
               <TimestampDay>31</TimestampDay>
-              <TimestampTime>22:26:04+00:00</TimestampTime>
+              <TimestampTime xsi:type="xs:time">22:26:04+00:00</TimestampTime>
               <Facility>PARSER</Facility>
               <Severity>5</Severity>
               <Mnemonic>CFGLOG_LOGGEDCMD</Mnemonic>
@@ -602,7 +609,7 @@ SOFTWARE.
           </OriginalAddress>
           <sl:ESXi>
             <Header>
-              <TimestampNano>2018-04-11T10:32:56.871000+00:00</TimestampNano>
+              <TimestampNano xsi:type="xs:dateTime">2018-04-11T10:32:56.871000+00:00</TimestampNano>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>Hostd</AppName>
             </Header>
@@ -631,7 +638,7 @@ SOFTWARE.
           </OriginalAddress>
           <sl:ESXi>
             <Header>
-              <Timestamp>2018-04-10T18:34:25+00:00</Timestamp>
+              <Timestamp xsi:type="xs:dateTime">2018-04-10T18:34:25+00:00</Timestamp>
               <Hostname>mymachine.example.com</Hostname>
               <AppName>crond[12345]</AppName>
             </Header>
@@ -706,7 +713,7 @@ SOFTWARE.
             <Header>
               <TimestampMonth>Oct</TimestampMonth>
               <TimestampDay>4</TimestampDay>
-              <TimestampTime>13:39:37+00:00</TimestampTime>
+              <TimestampTime xsi:type="xs:time">13:39:37+00:00</TimestampTime>
               <Hostname>localhost</Hostname>
             </Header>
             <Message>Syslog message 8656001952143 failed processing</Message>

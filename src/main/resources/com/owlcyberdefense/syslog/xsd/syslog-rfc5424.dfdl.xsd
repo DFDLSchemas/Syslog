@@ -149,20 +149,13 @@ SOFTWARE.
   <xs:group name="rfc5424BodyGroup">
     <xs:sequence>
       <xs:choice>
-        <!--
-        NoStructuredData was an element with length="0" and an initiator="-"
-        but that's not portable as IBM DFDL doesn't put that into the infoset.
-        So we model this as a length 1 element instead.
-
-        <xs:element name="NoStructuredData" type="xs:string" dfdl:lengthKind="explicit" dfdl:length="1">
+        <xs:element name="NoStructuredData" type="xs:string" dfdl:lengthKind="explicit" dfdl:length="1" fixed="-">
           <xs:annotation>
-          <xs:appinfo source="http://www.ogf.org/dfdl/">
-            <dfdl:assert>{ . eq '-' }</dfdl:assert>
-          </xs:appinfo>
+            <xs:appinfo source="http://www.ogf.org/dfdl/">
+              <dfdl:assert test="{ . eq '-' }" />
+            </xs:appinfo>
           </xs:annotation>
         </xs:element>
-        -->
-        <xs:sequence dfdl:initiator="-"/>
         <xs:element name="StructuredData">
           <xs:complexType>
             <xs:sequence>
