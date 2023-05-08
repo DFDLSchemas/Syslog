@@ -136,7 +136,7 @@ SOFTWARE.
       </xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="PriorityValue" type="PriorityValueType" />
+      <xs:element name="PriorityValue" type="sl:PriorityValueType" />
     </xs:sequence>
   </xs:group>
   -->
