@@ -30,6 +30,10 @@ changed from "replace" to "error" when used with IBM DFDL
 
 ## Release Notes
 
+### 2.0.1
+- Replaces empty sequence in choice to support validation with Xerces-C
+- Modifications to make IBM portability testing easier
+
 ### 2.0.0
 - Modifies Syslog element to support all variants at once
 - New schemas support parsing only individual variants
