@@ -47,7 +47,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_example_01" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -87,7 +89,7 @@ SOFTWARE.
     so that the unparsed data is 14:15.000000
     -->
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<165>Original Address=192.168.1.1 1 2003-08-24T05:14:15.000003-07:00 192.0.2.1 myproc 8710 - - %% It's time to make the do-nuts.]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -122,7 +124,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_example_03" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"] ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -173,7 +177,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_example_04" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-5424">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [exampleSDID@32473 iut="3" eventSource="Application" eventID="1011"][examplePriority@32473]]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -224,7 +228,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_timestamp_no_nano" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-5424, without the optional fractional seconds in the timestamp">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -259,7 +265,11 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_invalid_hostname_char" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="hostname contains an ascii control character">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.%#x07;example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.]]></tdml:documentPart>
+      <tdml:documentPart type="byte">07</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[example.com su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -298,7 +308,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_invalid_msgid_length" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="msgid is too long">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47ABCDEFGHIJKLMNOPQRSTUVWXYZ012 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -337,7 +349,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_invalid_prival" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="prival is too large">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<192>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<192>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -379,7 +393,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_invalid_sdid" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="sdid contains an invalid character">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] %#xEF;%#xBB;%#xBF;An application event log entry...]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<165>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z mymachine.example.com evntslog - ID47 [example=SDID@32473 iut="3" eventSource="Application" eventID="1011"] ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[An application event log entry...]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -435,7 +451,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_missing_hostname" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="missing hostname field">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 1 2003-10-11T22:14:15.003Z su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
@@ -447,7 +465,9 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_5424_bad_original_address" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-5424, without the solarwinds original address field invalid">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=256.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - %#xEF;%#xBB;%#xBF;'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=256.168.1.1 1 2003-10-11T22:14:15Z mymachine.example.com su - ID47 - ]]></tdml:documentPart>
+      <tdml:documentPart type="byte">EF BB BF</tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA['su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -488,7 +508,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_3164_example_01" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from rfc-3164">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<34>Original Address=192.168.1.1 Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<34>Original Address=192.168.1.1 Oct 11 22:14:15 mymachine su: 'su root' failed for lonvick on /dev/pts/8]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -524,7 +544,7 @@ SOFTWARE.
     roundTrip="twoPass">
     <!-- twoPass because data has Feb 5, not Feb 05 -->
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<13>Original Address=192.168.1.1 Feb  5 17:32:18 10.0.0.99 Use the BFG!]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<13>Original Address=192.168.1.1 Feb  5 17:32:18 10.0.0.99 Use the BFG!]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -554,7 +574,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_cisco_example_01" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example of cisco logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="false"><![CDATA[<189>Original Address=192.168.1.1 77: Aug 31 22:26:04: %PARSER-5-CFGLOG_LOGGEDCMD: User:admin  logged command:interface GigabitEthernet1/0/22]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<189>Original Address=192.168.1.1 77: Aug 31 22:26:04: %PARSER-5-CFGLOG_LOGGEDCMD: User:admin  logged command:interface GigabitEthernet1/0/22]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -594,7 +614,7 @@ SOFTWARE.
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from ESXi logs"
    >
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<163>Original Address=192.168.1.1 2018-04-11T10:32:56.871Z mymachine.example.com Hostd: error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<163>Original Address=192.168.1.1 2018-04-11T10:32:56.871Z mymachine.example.com Hostd: error hostd[FFF25B70] [Originator@6116 sub=SoapAdapter.HTTPService.HttpConnection] Failed to read header on stream <io_obj p:0x6410d73c, h:35, <TCP '0.0.0.0:0'>, <TCP '0.0.0.0:0'>>: N1Vmacore10SystemExceptionE(Connection reset by peer)]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -623,7 +643,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_esxi_example_02" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>
@@ -652,7 +672,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_esxi_missing_timestamp_info" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<15>Original Address=192.168.1.1 mymachine.example.com crond[12345]: crond: USER root pid 83 cmd /usr/lib/vmware/vsan/bin/vsanObserver.sh]]></tdml:documentPart>
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
@@ -667,7 +687,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_esxi_missing_message" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from ESXi logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]:]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<15>Original Address=192.168.1.1 2018-04-10T18:34:25Z mymachine.example.com crond[12345]:]]></tdml:documentPart>
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
@@ -680,7 +700,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_3164_failing_messages_nopad_timestamp" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from solarwinds failed message logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 4 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<131>Original Address=192.168.1.1 Oct 4 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
@@ -696,7 +716,7 @@ SOFTWARE.
   <tdml:parserTestCase name="syslog_3164_failing_messages_zeropad_timestamp" root="SolarwindsSyslog"
     model="com/owlcyberdefense/syslog/xsd/syslog-solarwinds.dfdl.xsd" description="example from solarwinds failed message logs">
     <tdml:document>
-      <tdml:documentPart type="text" replaceDFDLEntities="true"><![CDATA[<131>Original Address=192.168.1.1 Oct 04 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
+      <tdml:documentPart type="text"><![CDATA[<131>Original Address=192.168.1.1 Oct 04 13:39:37 localhost Syslog message 8656001952143 failed processing]]></tdml:documentPart>
     </tdml:document>
     <tdml:infoset>
       <tdml:dfdlInfoset>

@@ -204,7 +204,14 @@ SOFTWARE.
       <xs:element name="Message" minOccurs="0" dfdl:initiator="%SP;">
         <xs:complexType>
           <xs:choice>
-            <xs:element name="UTF8" dfdl:initiator="%#xEF;%#xBB;%#xBF;" type="sl:msgStr" dfdl:encoding="UTF-8" />
+            <xs:element name="UTF8" dfdl:initiator="%#xFEFF;" type="sl:msgStr" dfdl:encoding="UTF-8">
+              <xs:annotation>
+                <xs:documentation>
+                  The %#xFEFF; initiator represents the unicode byte-order mark character,
+                  which is the 3 bytes EF BB BF in UTF-8 encoding.
+                </xs:documentation>
+              </xs:annotation>
+            </xs:element>
             <xs:element name="Any" type="sl:msgStr" dfdl:encoding="US-ASCII" />
           </xs:choice>
         </xs:complexType>
