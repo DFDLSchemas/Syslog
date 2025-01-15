@@ -386,7 +386,6 @@ SOFTWARE.
       <tdml:error>24</tdml:error>
       <tdml:error>24</tdml:error>
       <tdml:error>PriorityValue</tdml:error>
-      <tdml:error>191</tdml:error>
     </tdml:validationErrors>
   </tdml:parserTestCase>
 
