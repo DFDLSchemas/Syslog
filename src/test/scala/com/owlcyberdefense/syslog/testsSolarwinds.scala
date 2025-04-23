@@ -40,8 +40,8 @@ import org.junit.AfterClass
 object TestSolarwinds {
   lazy val runner = Runner("/com/owlcyberdefense/syslog/", "testsSolarwinds.tdml")
 
-  @AfterClass def shutDown {
-    runner.reset
+  @AfterClass def shutDown = {
+    runner.reset()
   }
 }
 

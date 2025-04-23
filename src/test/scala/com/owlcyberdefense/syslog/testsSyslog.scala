@@ -39,8 +39,8 @@ import org.junit.AfterClass
 object TestSyslog {
   lazy val runner = Runner("/com/owlcyberdefense/syslog/", "testsSyslog.tdml")
 
-  @AfterClass def shutDown {
-    runner.reset
+  @AfterClass def shutDown = {
+    runner.reset()
   }
 }
 
