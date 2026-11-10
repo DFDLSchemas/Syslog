@@ -703,8 +703,6 @@ SOFTWARE.
     </tdml:document>
     <tdml:errors>
       <tdml:error>alternatives failed</tdml:error>
-      <tdml:error>Separator</tdml:error>
-      <tdml:error>Not Found</tdml:error>
       <tdml:error>Unable to parse</tdml:error>
       <tdml:error>xs:int</tdml:error>
       <tdml:error>text: 4</tdml:error>
